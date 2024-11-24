@@ -83,3 +83,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .cc-text-input {
+    @apply border border-solid border-chineseWhite rounded-sm px-2 py-4 text-sm leading-4 text-raisinBlack font-medium;
+  }
+}

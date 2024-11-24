@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
-// components/LoginForm.tsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 // Validation schema with Zod
 const schema = z.object({
@@ -14,10 +15,6 @@ const schema = z.object({
 });
 
 type FormData = z.infer<typeof schema>;
-
-const onSubmit = async (data: FormData) => {
-    //
-};
 
 const LoginForm = () => {
   const {
@@ -28,23 +25,75 @@ const LoginForm = () => {
     resolver: zodResolver(schema),
   });
 
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onSubmit = async (data: FormData, setError: (msg: string) => void) => {
+    try {
+      const response = await fetch("https://localhost:7071/api/account/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
   
+      if (!response.ok) {
+        // Handle non-200 responses
+        const errorData = await response.json();
+        setError(errorData.message || "Login failed");
+        return;
+      }
+  
+      const responseData = await response.json();
+      // Example of storing the token locally
+      localStorage.setItem("authToken", responseData.token);
+      alert(`Welcome, ${responseData.email}`);
+      router.push("/search");
+    } catch (error) {
+      setError("An unexpected error occurred. Please try again.");
+      console.error(error);
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit((data) => onSubmit(data, setErrorMessage))}
+      className="space-y-4"
+    >
       <div>
-        <label htmlFor="email" className="block">Email</label>
-        <Input id="email" type="email" {...register("email")} className="w-full" />
+        <label htmlFor="email" className="block text-darkSeaGreen text-sm leading-4 mb-2">
+          Email
+        </label>
+        <Input
+          id="email"
+          type="email"
+          variant="text"
+          {...register("email")}
+          className="w-full"
+        />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       </div>
 
       <div>
-        <label htmlFor="password" className="block">Password</label>
-        <Input id="password" type="password" {...register("password")} className="w-full" />
+        <label htmlFor="password" className="block text-darkSeaGreen text-sm leading-4 mb-2">
+          Password
+        </label>
+        <Input
+          id="password"
+          type="password"
+          variant="text"
+          {...register("password")}
+          className="w-full"
+        />
         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
       </div>
 
-      <Button type="submit" className="w-full">Login</Button>
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
+      <Button type="submit" className="w-full cc-btn cc-btn--glow">
+        Login
+      </Button>
     </form>
   );
 };

@@ -50,7 +50,10 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
-			darkSeaGreen: "#81C784"
+			darkSeaGreen: "#81C784",
+			apple: "#4caf50",
+			chineseWhite: "#E0E0E0",
+			raisinBlack: "#212121"
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

@@ -1,22 +1,46 @@
-import * as React from "react"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
+// Define input variants
+const inputVariants = cva(
+  "", // Base styles
+  {
+    variants: {
+      variant: {
+        default: "",
+        text: "border border-solid border-chineseWhite font-medium text-raisinBlack",
+      },
+      size: {
+        md: "rounded-md px-2 py-4 text-sm leading-4 "
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+    },
+  }
+);
 
-const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, type, ...props }, ref) => {
+// Define InputProps interface
+export interface InputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "className" | "size">, // Exclude conflicting properties
+    VariantProps<typeof inputVariants> {
+  className?: string; // Redefine `className` explicitly
+}
+
+// Input component
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, variant, size, ...props }, ref) => {
     return (
       <input
-        type={type}
-        className={cn(
-          "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
-          className
-        )}
+        className={cn(inputVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = "Input";
 
-export { Input }
+export { Input, inputVariants };
