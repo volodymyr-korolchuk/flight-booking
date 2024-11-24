@@ -1,18 +1,23 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { bgPattern } from "@/assets/images";
 import Image from "next/image";
+import { usePathname, useSearchParams } from "next/navigation";
+
 import Ticket from "@/components/Ticket";
-import BookingData from "@/components/BookingData";
-import { useSearchParams } from "next/navigation";
-import { API_BASE_URL, USER_REQUESTED_PARAMS } from "../constants";
-import TicketsSkeleton from "@/components/TicketsSkeleton";
+import Filters from "@/components/Filters";
 import NoResults from "@/components/NoResults";
+import BookingData from "@/components/BookingData";
+import TicketsSkeleton from "@/components/TicketsSkeleton";
+import { bgPattern } from "@/assets/images";
+import { API_BASE_URL, USER_REQUESTED_PARAMS } from "../constants";
+import BottomPagination from "@/components/Pagination";
 
 export default function Results() {
   const [flights, setFlights] = useState<FlightData[]>([]);
+  const [pagesCount, setPagesCount] = useState(0);
   const [isFetching, setFetching] = useState(true);
+
   const searchParams = useSearchParams();
   const bookingParams: UserRequestedParams = USER_REQUESTED_PARAMS.reduce(
     (acc, key) => {
@@ -35,6 +40,11 @@ export default function Results() {
         }
         const data = await response.json();
         setFlights(data);
+
+        const pagesCount = response.headers.get("pagination");
+        if (pagesCount) {
+          setPagesCount(JSON.parse(pagesCount)["totalPages"]);
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -54,9 +64,14 @@ export default function Results() {
         height={1200}
         alt="Background Pattern"
       />
-      <div className="lg:px-28 px-4 md:px-8 w-full grid grid-cols-1 gap-y-8 pb-[128px]">
+
+      <div className="lg:px-28 px-4 md:px-8 w-full pb-4 flex flex-col gap-y-24">
         <BookingData params={bookingParams} />
 
+        {flights && flights.length > 0 && <Filters />}
+      </div>
+
+      <div className="lg:px-28 px-4 md:px-8 w-full grid grid-cols-1 gap-y-8 pb-[128px]">
         {isFetching ? (
           <TicketsSkeleton />
         ) : flights && flights?.length > 0 ? (
@@ -66,6 +81,8 @@ export default function Results() {
         ) : (
           <NoResults />
         )}
+
+        <BottomPagination pagesCount={pagesCount} />
       </div>
     </section>
   );
