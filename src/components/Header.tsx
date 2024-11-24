@@ -85,7 +85,7 @@ const Header = () => {
   const renderUserIcon = pathname !== "/auth";
 
   return (
-    <header className="w-full bg-darkSeaGreen p-3 flex justify-between">
+    <header className="w-full bg-darkSeaGreen p-3 flex justify-between drop-shadow-lg fixed rounded-b-lg top-0 z-50">
       <div className="w-fit flex items-center justify-center gap-x-2">
         <PlaneSvg />
         <p className="text-white">AirWay</p>
