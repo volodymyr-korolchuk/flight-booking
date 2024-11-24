@@ -13,6 +13,12 @@ body {
   }
 }
 
+@layer components {
+  .cc-text-input {
+    @apply border border-solid border-chineseWhite rounded-sm px-2 py-4 text-sm leading-4 text-raisinBlack font-medium;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
