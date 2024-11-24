@@ -15,6 +15,10 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+const onSubmit = async (data: FormData) => {
+    //
+};
+
 const LoginForm = () => {
   const {
     register,
@@ -24,14 +28,12 @@ const LoginForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Login submitted with: ", data);
-  };
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block">EmFail</label>
+        <label htmlFor="email" className="block">Email</label>
         <Input id="email" type="email" {...register("email")} className="w-full" />
         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       </div>
