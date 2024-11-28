@@ -78,8 +78,8 @@ export default function Results() {
       />
 
       <div className="lg:px-28 px-4 md:px-8 w-full pb-4 flex flex-col gap-y-24">
-        <BookingData params={searchParams} />
-        <Filters flights={flights} setConfig={setConfig} />
+        <BookingData config={config} />
+        <Filters config={config} setConfig={setConfig} />
       </div>
 
       <div className="lg:px-28 px-4 md:px-8 w-full grid grid-cols-1 gap-y-8 pb-[128px]">
