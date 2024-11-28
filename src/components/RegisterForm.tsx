@@ -8,6 +8,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 // Validation schema with Zod
 const schema = z.object({
@@ -49,7 +50,7 @@ const RegisterForm = () => {
       }
   
       const responseData = await response.json();
-      alert(`Welcome, ${responseData.name}! Registration successful.`);
+      toast(`Welcome, ${responseData.email}! Registration successful.`);
       router.push('auth');
       location.reload();
     } catch (error) {

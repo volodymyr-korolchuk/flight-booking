@@ -11,7 +11,7 @@ const BookingData: React.FC<Props> = ({ config }) => {
       <h4 className="text-[40px] text-[#2A4A2C] font-semibold mb-5">
         Your booking ✈️
       </h4>
-      <div className="bg-[#F4F4F4] border border-solid border-black rounded-md p-4 flex gap-12">
+      <div className="bg-[#F4F4F4] border max-lg:flex-wrap border-solid border-black rounded-md p-4 flex gap-12">
         <div className="flex items-center gap-2 text-[#2A4A2C] font-semibold">
           {config?.flightSearchParams?.originLocationCode}
           <ArrowSvg />

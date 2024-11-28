@@ -44,8 +44,8 @@ const Ticket: React.FC<Props> = ({ flight }) => {
   return (
     <div className="flex flex-col border border-solid border-black overflow-clip rounded-lg w-full relative drop-shadow-lg">
       <div className="flex flex-col">
-        <div className="grid grid-cols-2">
-          <div className="flex gap-2 items-center justify-between px-6 py-6 bg-[#EFFFF4] md:border-r border-solid border-black">
+        <div className="grid lg:grid-cols-2 grid-cols-1">
+          <div className="max-lg:order-2 flex gap-2 items-center justify-between px-6 py-6 bg-[#EFFFF4] md:border-r border-solid border-black">
             {locations.map((location, i) => (
               <>
                 {i > 0 && (
@@ -69,7 +69,7 @@ const Ticket: React.FC<Props> = ({ flight }) => {
           </div>
 
           <div
-            className="p-6 flex items-center"
+            className="max-lg:order-1 p-6 flex items-center"
             style={{ backgroundColor: flightClassColor }}
           >
             <div className="text-[18px] w-full flex justify-between items-center">
@@ -82,7 +82,7 @@ const Ticket: React.FC<Props> = ({ flight }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 bg-white border-t border-solid border-black min-h-40">
+        <div className="grid lg:grid-cols-2 grid-cols-1 bg-white border-t border-solid border-black min-h-40">
           <div className="flex flex-col  border-solid border-black px-6 py-6 justify-between">
             <div>
               <span>
@@ -104,7 +104,7 @@ const Ticket: React.FC<Props> = ({ flight }) => {
           </div>
 
           <div className="flex items-end justify-end px-6 py-6">
-            <button className="bg-[#DCE3FF] hover:saturate-200 px-4 py-2 border border-solid border-black/50 rounded-md">
+            <button className="max-lg:w-full bg-[#DCE3FF] hover:saturate-200 px-4 py-2 border border-solid border-black/50 rounded-md">
               Book Flight
             </button>
           </div>

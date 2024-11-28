@@ -1,10 +1,8 @@
-import { Button } from "@/components/ui/button";
+"use client"
+
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="h-full">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Similique ex dolor culpa accusamus placeat sit aliquam molestias fugit iusto quasi!
-      <Button>Some button text</Button>
-    </div>
-  );
+  const router = useRouter();
+  router.push("/auth")
 }

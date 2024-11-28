@@ -7,6 +7,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 // Validation schema with Zod
 const schema = z.object({
@@ -48,7 +49,7 @@ const LoginForm = () => {
       const responseData = await response.json();
       // Example of storing the token locally
       localStorage.setItem("authToken", responseData.token);
-      alert(`Welcome, ${responseData.email}`);
+      toast(`Welcome, ${responseData.email}`);
       router.push("/search");
     } catch (error) {
       setError("An unexpected error occurred. Please try again.");

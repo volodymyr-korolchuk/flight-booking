@@ -87,13 +87,14 @@ export default function Results() {
           <TicketsSkeleton />
         ) : flights && flights?.length > 0 ? (
           flights.map((entry: FlightData, i) => (
-            <Ticket key={i} flight={entry} />
+              <Ticket key={i} flight={entry} />
           ))
         ) : (
           <NoResults />
         )}
 
-        <BottomPagination pagesCount={pagesCount} />
+        {!isFetching && flights && flights.length > 0 && <BottomPagination pagesCount={pagesCount} />
+        }
       </div>
     </section>
   );

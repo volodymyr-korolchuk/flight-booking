@@ -134,7 +134,7 @@ const Filters: React.FC<Props> = ({ config, setConfig }) => {
             Filters
           </Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="max-lg:max-w-[100vw] max-lg:max-h-[100vh]">
           <DialogHeader>
             <DialogTitle className="text-darkSeaGreen text-[24px]">
               Filters
