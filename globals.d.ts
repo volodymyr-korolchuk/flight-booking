@@ -32,11 +32,52 @@ declare global {
   }
 
   interface UserRequestedParams {
+    originLocationCode?: string;
+    destinationLocationCode?: string;
+    adults?: string;
+    children?: string;
+    infants?: string;
+    departureDate?: string;
+  }
+
+  export const enum SortBy {
+    PriceAsc = "PriceAsc",
+    PriceDesc = "PriceDesc",
+    FlightsDurationAsc = "FlightsDurationAsc",
+    FlightsDurationDesc = "FlightsDurationDesc",
+  }
+
+  interface FlightSearchParams {
+    SortBy?: string;
     originLocationCode: string;
     destinationLocationCode: string;
-    adults: string;
     departureDate: string;
+    returnDate?: string;
+    adults: number;
+    children?: number;
+    infants?: number;
+    travelClass?: string;
+  }
+
+  interface FlightFilterCriteria {
+    minPrice?: number;
+    maxPrice?: number;
+    departureTimeRange?: TimeRange;
+    arrivalTimeRange?: TimeRange;
+    airline?: string;
+  }
+
+  interface FlightsFilterRequest {
+    flightSearchParams: FlightSearchParams;
+    filterCriteria?: FlightFilterCriteria;
+  }
+
+  interface TimeRange {
+    start: string;
+    end: string;
   }
 }
+
+
 
 export {};

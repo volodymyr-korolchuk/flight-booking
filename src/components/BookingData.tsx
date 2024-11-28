@@ -2,7 +2,7 @@ import React from "react";
 import { ArrowSvg } from "./svgs";
 
 interface Props {
-  params: UserRequestedParams;
+  params: URLSearchParams;
 }
 
 const BookingData: React.FC<Props> = ({ params }) => {
@@ -13,19 +13,34 @@ const BookingData: React.FC<Props> = ({ params }) => {
       </h4>
       <div className="bg-[#F4F4F4] border border-solid border-black rounded-md p-4 flex gap-12">
         <div className="flex items-center gap-2 text-[#2A4A2C] font-semibold">
-          {params.originLocationCode}
+          {params.get("originLocationCode")}
           <ArrowSvg />
-          {params.destinationLocationCode}
+          {params.get("destinationLocationCode")}
         </div>
 
         <div className="flex items-center gap-2 text-[#2A4A2C] font-semibold">
-          <p>Passengers:</p>
-          <p className="text-[#63b068]">{params.adults}</p>
+          <p>Adults:</p>
+          <p className="text-[#63b068]">{params.get("adults") || 0}</p>
+        </div>
+
+        <div className="flex items-center gap-2 text-[#2A4A2C] font-semibold">
+          <p>Children:</p>
+          <p className="text-[#63b068]">{params.get("children") || 0}</p>
+        </div>
+
+        <div className="flex items-center gap-2 text-[#2A4A2C] font-semibold">
+          <p>Infants:</p>
+          <p className="text-[#63b068]">{params.get("infants") || 0}</p>
         </div>
 
         <div className="flex items-center gap-2 text-[#2A4A2C] font-semibold">
           <p>Departure:</p>
-          <p className="text-[#63b068]">{params.departureDate}</p>
+          <p className="text-[#63b068]">
+            {params.get("departureDate")
+              ?.split("T")
+              .map((x, i, a) => (i === a.length - 1 ? x.split(".").at(0) : x))
+              .join(" ")}
+          </p>
         </div>
       </div>
     </div>

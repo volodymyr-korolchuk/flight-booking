@@ -4,6 +4,7 @@ import { ticketFiller } from "@/assets/images";
 import Image from "next/image";
 import React from "react";
 import { ArrivalSvg, DepartureSvg, DetailsSvg, PlaneSvg } from "./svgs";
+import { FLIGHT_CLASS_COLORS } from "@/app/constants";
 
 interface Props {
   flight: FlightData;
@@ -35,6 +36,10 @@ const Ticket: React.FC<Props> = ({ flight }) => {
     .flat();
 
   const carriers = new Set(segments.map((segment) => segment.carrier));
+  const flightClassColor =
+    FLIGHT_CLASS_COLORS[
+      flight.comfortClass.toLocaleLowerCase() as keyof typeof FLIGHT_CLASS_COLORS
+    ];
 
   return (
     <div className="flex flex-col border border-solid border-black overflow-clip rounded-lg w-full relative drop-shadow-lg">
@@ -52,7 +57,7 @@ const Ticket: React.FC<Props> = ({ flight }) => {
                 )}
 
                 {i === locations.length - 1 && <ArrivalSvg />}
-                <div key={i}>
+                <div key={i} className="flex flex-col items-center" >
                   <p className="">
                     {location.at.split("T").at(-1)?.slice(0, 5)}
                   </p>
@@ -63,8 +68,17 @@ const Ticket: React.FC<Props> = ({ flight }) => {
             ))}
           </div>
 
-          <div className="p-6 flex items-center bg-darkSeaGreen/80">
-            <h4 className="font-semibold text-[18px]">{flight.comfortClass}</h4>
+          <div
+            className="p-6 flex items-center"
+            style={{ backgroundColor: flightClassColor }}
+          >
+            <div className="text-[18px] w-full flex justify-between items-center">
+              <p>{flight.comfortClass.replace("_", " ")}</p>
+              <span className="flex gap-2 font-semibold">
+                {flight.price}
+                <p>{flight.currency}</p>
+              </span>
+            </div>
           </div>
         </div>
 
